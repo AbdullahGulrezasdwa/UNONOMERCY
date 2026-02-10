@@ -3,65 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNO No Mercy - Web Edition</title>
+    <title>UNO No Mercy - High End Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
         <div id="start-menu" class="overlay">
-            <h1>UNO <span class="no-mercy">NO MERCY</span></h1>
-            <button id="start-btn">Start Game</button>
-            <button id="rules-btn">How to Play</button>
+            <h1 class="logo">UNO <span class="no-mercy">NO MERCY</span></h1>
+            <div class="setup-box">
+                <label>Players (2-10):</label>
+                <input type="number" id="player-count" min="2" max="10" value="2">
+                <button id="start-btn">START GAME</button>
+            </div>
         </div>
 
-        <div id="rules-popup" class="overlay hidden">
-            <div class="popup-content">
-                <h2>No Mercy Rules</h2>
-                <ul>
-                    <li><strong>Stacking:</strong> +2, +4, +6, and +10 cards can be stacked.</li>
-                    <li><strong>Mercy Rule:</strong> If a player has 25+ cards, they are eliminated!</li>
-                    <li><strong>0 & 7:</strong> Play a 0 to pass hands in order; play a 7 to swap hands with anyone.</li>
-                    <li><strong>Jump-in:</strong> Not active in this version for stability.</li>
-                </ul>
-                <button id="close-rules">Got it!</button>
-            </div>
+        <div id="turn-shield" class="overlay hidden">
+            <h2 id="next-player-name">Player 2</h2>
+            <p>Pass the device...</p>
+            <button id="confirm-turn">READY</button>
         </div>
 
         <div id="main-game" class="hidden">
             <div class="sidebar">
                 <div class="status-box">
-                    <h3>Current Color</h3>
-                    <div id="current-color-indicator" class="color-dot"></div>
+                    <div id="current-color-text">COLOR</div>
+                    <div id="color-indicator"></div>
+                    <div id="stack-count">STACK: 0</div>
                 </div>
-                <div class="pile-area">
-                    <div id="draw-pile" class="card-back">Draw</div>
-                    <div id="discard-pile"></div>
-                </div>
-                <div id="game-log"></div>
+                <div id="draw-pile" class="card-back">UNO</div>
+                <div id="discard-pile"></div>
+                <div id="player-list"></div>
             </div>
 
-            <div class="play-area">
-                <div id="opponents-container">
-                    <div class="cpu-player" id="cpu1">CPU 1: 7 cards</div>
-                    <div class="cpu-player" id="cpu2">CPU 2: 7 cards</div>
-                    <div class="cpu-player" id="cpu3">CPU 3: 7 cards</div>
-                </div>
-
-                <div id="player-hand-container">
-                    <div id="player-hand"></div>
-                </div>
+            <div class="hand-container">
+                <div id="player-hand"></div>
             </div>
         </div>
 
-        <div id="game-over" class="overlay hidden">
-            <h2 id="winner-text">Player Wins!</h2>
-            <button onclick="location.reload()">Play Again</button>
+        <div id="color-picker" class="overlay hidden">
+            <h2>CHOOSE COLOR</h2>
+            <div class="color-grid">
+                <div class="pick red" onclick="selectColor('red')"></div>
+                <div class="pick blue" onclick="selectColor('blue')"></div>
+                <div class="pick green" onclick="selectColor('green')"></div>
+                <div class="pick yellow" onclick="selectColor('yellow')"></div>
+            </div>
         </div>
     </div>
-
-    <audio id="sfx-play" src="https://actions.google.com/sounds/v1/foley/paper_shuffle.ogg"></audio>
-    <audio id="sfx-draw" src="https://actions.google.com/sounds/v1/foley/fast_plastic_flick.ogg"></audio>
-
     <script src="script.js"></script>
 </body>
 </html>
