@@ -1,47 +1,53 @@
-// Replace your existing renderHand/renderDiscard logic with this:
-function createCardElement(card) {
-    const cardDiv = document.createElement('div');
-    cardDiv.className = `card-face ${card.color}`;
-    cardDiv.setAttribute('data-value', card.value);
+// ... [Keep your existing Deck and Player variables from before] ...
 
-    // Corner Value (Top Left)
-    const tl = document.createElement('div');
-    tl.className = 'card-corner corner-tl';
-    tl.innerText = card.value;
+function createCardUI(card, isSmall = false) {
+    const el = document.createElement('div');
+    el.className = `card ${card.color}`;
+    el.setAttribute('data-val', card.value);
 
-    // Center Value
-    const center = document.createElement('div');
-    center.className = 'card-value';
-    center.innerText = card.value;
+    const valCenter = document.createElement('div');
+    valCenter.className = 'card-val';
+    valCenter.innerText = card.value;
 
-    // Corner Value (Bottom Right)
-    const br = document.createElement('div');
-    br.className = 'card-corner corner-br';
-    br.innerText = card.value;
+    const cornerTL = document.createElement('div');
+    cornerTL.className = 'corner top-l';
+    cornerTL.innerText = card.value;
 
-    cardDiv.appendChild(tl);
-    cardDiv.appendChild(center);
-    cardDiv.appendChild(br);
+    const cornerBR = document.createElement('div');
+    cornerBR.className = 'corner bot-r';
+    cornerBR.innerText = card.value;
 
-    return cardDiv;
+    el.append(cornerTL, valCenter, cornerBR);
+    return el;
 }
 
-// Update the player hand rendering loop:
 function renderGame() {
-    // ... (previous logic for turn indicators) ...
+    const p = players[turn];
+    
+    // Update Stack & Color
+    document.getElementById('stack-count').innerText = `STACK: ${drawStack}`;
+    document.getElementById('color-indicator').style.background = `var(--${currentColor})`;
 
-    // Render Discard Pile
-    const discardArea = document.getElementById('discard-pile');
-    discardArea.innerHTML = ''; // Clear old card
+    // Discard Pile
+    const discardDiv = document.getElementById('discard-pile');
+    discardDiv.innerHTML = '';
     const topCard = discardPile[discardPile.length - 1];
-    discardArea.appendChild(createCardElement(topCard));
+    discardDiv.appendChild(createCardUI(topCard));
 
-    // Render Player Hand
+    // Player Hand
     const handDiv = document.getElementById('player-hand');
     handDiv.innerHTML = '';
-    players[turn].hand.forEach((card, idx) => {
-        const el = createCardElement(card);
-        el.onclick = () => tryPlayCard(idx);
-        handDiv.appendChild(el);
+    p.hand.forEach((card, idx) => {
+        const cardEl = createCardUI(card);
+        cardEl.onclick = () => tryPlayCard(idx);
+        handDiv.appendChild(cardEl);
     });
+
+    // Player List
+    const listDiv = document.getElementById('player-list');
+    listDiv.innerHTML = players.map(pl => `
+        <div style="color: ${pl.id === turn ? 'white' : '#777'}">
+            ${pl.name}: ${pl.hand.length} cards
+        </div>
+    `).join('');
 }
