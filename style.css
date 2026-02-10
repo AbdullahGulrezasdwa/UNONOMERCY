@@ -1,68 +1,65 @@
-/* Premium Card Styling */
-.card-face {
-    width: 120px;
-    height: 180px;
-    border-radius: 12px;
-    border: 4px solid white;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial Black', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-    overflow: hidden; /* Clips the inner oval */
-    user-select: none;
+:root {
+    --red: linear-gradient(135deg, #ff1f1f, #b30000);
+    --blue: linear-gradient(135deg, #1f70ff, #003eb3);
+    --green: linear-gradient(135deg, #1fff3a, #008a12);
+    --yellow: linear-gradient(135deg, #f3ff1f, #b3a700);
+    --black: #111;
 }
 
-/* The UNO Oval Background */
-.card-face::before {
-    content: '';
-    position: absolute;
-    width: 140%;
-    height: 70%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(-45deg);
-    border-radius: 50%;
-    z-index: 1;
+body {
+    margin: 0; background-color: #050505; color: white;
+    font-family: 'Arial Black', Gadget, sans-serif;
+    overflow: hidden; height: 100vh;
 }
 
-/* Card Values (Center) */
-.card-value {
-    font-size: 3rem;
-    color: white;
-    z-index: 2;
-    text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
-    -webkit-text-stroke: 1px rgba(0,0,0,0.2);
+.overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+    z-index: 100; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
 }
 
-/* Corner Numbers (Top-Left and Bottom-Right) */
-.card-corner {
-    position: absolute;
-    font-size: 1.2rem;
-    color: white;
-    z-index: 2;
-}
-.corner-tl { top: 8px; left: 8px; }
-.corner-br { bottom: 8px; right: 8px; transform: rotate(180deg); }
+.hidden { display: none !important; }
 
-/* No Mercy Special Colors */
-.red    { background: linear-gradient(135deg, #ff4b2b, #ff416c); }
-.blue   { background: linear-gradient(135deg, #0052d4, #4364f7, #6fb1fc); }
-.green  { background: linear-gradient(135deg, #11998e, #38ef7d); }
-.yellow { background: linear-gradient(135deg, #ffe259, #ffa751); }
-.wild   { background: linear-gradient(135deg, #232526, #414345); border-color: #666; }
-
-/* The +10 and +6 "Glow" */
-.card-face[data-value="+10"], .card-face[data-value="W-REV"] {
-    box-shadow: 0 0 15px #ff0000;
-    border-color: #ff0000;
+/* The "High-End" Card Body */
+.card {
+    width: 110px; height: 165px; border-radius: 10px;
+    border: 3px solid white; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    cursor: pointer; transition: transform 0.2s;
+    overflow: hidden; flex-shrink: 0;
 }
 
-/* Hover Effects */
-.card-face:hover {
-    transform: translateY(-25px) scale(1.05);
-    z-index: 100 !important;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+/* Iconic Oval Background */
+.card::before {
+    content: ''; position: absolute; width: 130%; height: 75%;
+    background: rgba(255,255,255,0.15); transform: rotate(-45deg);
+    border-radius: 50%; z-index: 1;
 }
+
+.card-val { font-size: 2.5rem; z-index: 2; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+
+/* Corner Numbers */
+.corner { position: absolute; font-size: 1rem; z-index: 2; }
+.top-l { top: 5px; left: 8px; }
+.bot-r { bottom: 5px; right: 8px; transform: rotate(180deg); }
+
+/* Card Colors */
+.red { background: var(--red); }
+.blue { background: var(--blue); }
+.green { background: var(--green); }
+.yellow { background: var(--yellow); }
+.wild { background: var(--black); border-color: #555; }
+
+/* Stacking Glow for +10s */
+.card[data-val="+10"] { box-shadow: 0 0 20px #ff0000; border-color: #ff0000; }
+
+/* Layout */
+#main-game { display: grid; grid-template-columns: 250px 1fr; height: 100vh; }
+
+.sidebar { background: #1a1a1a; padding: 20px; border-right: 3px solid #333; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+.hand-container { display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px; overflow-x: auto; }
+
+#player-hand { display: flex; gap: -20px; padding: 0 50px; } /* Negative gap for overlapping look */
+#player-hand .card:hover { transform: translateY(-30px) scale(1.1); z-index: 10; margin: 0 10px; }
