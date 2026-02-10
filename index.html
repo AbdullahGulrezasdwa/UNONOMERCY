@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNO No Mercy - Web Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-menu" class="overlay">
+            <h1>UNO <span class="no-mercy">NO MERCY</span></h1>
+            <button id="start-btn">Start Game</button>
+            <button id="rules-btn">How to Play</button>
+        </div>
 
+        <div id="rules-popup" class="overlay hidden">
+            <div class="popup-content">
+                <h2>No Mercy Rules</h2>
+                <ul>
+                    <li><strong>Stacking:</strong> +2, +4, +6, and +10 cards can be stacked.</li>
+                    <li><strong>Mercy Rule:</strong> If a player has 25+ cards, they are eliminated!</li>
+                    <li><strong>0 & 7:</strong> Play a 0 to pass hands in order; play a 7 to swap hands with anyone.</li>
+                    <li><strong>Jump-in:</strong> Not active in this version for stability.</li>
+                </ul>
+                <button id="close-rules">Got it!</button>
+            </div>
+        </div>
+
+        <div id="main-game" class="hidden">
+            <div class="sidebar">
+                <div class="status-box">
+                    <h3>Current Color</h3>
+                    <div id="current-color-indicator" class="color-dot"></div>
+                </div>
+                <div class="pile-area">
+                    <div id="draw-pile" class="card-back">Draw</div>
+                    <div id="discard-pile"></div>
+                </div>
+                <div id="game-log"></div>
+            </div>
+
+            <div class="play-area">
+                <div id="opponents-container">
+                    <div class="cpu-player" id="cpu1">CPU 1: 7 cards</div>
+                    <div class="cpu-player" id="cpu2">CPU 2: 7 cards</div>
+                    <div class="cpu-player" id="cpu3">CPU 3: 7 cards</div>
+                </div>
+
+                <div id="player-hand-container">
+                    <div id="player-hand"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over" class="overlay hidden">
+            <h2 id="winner-text">Player Wins!</h2>
+            <button onclick="location.reload()">Play Again</button>
+        </div>
+    </div>
+
+    <audio id="sfx-play" src="https://actions.google.com/sounds/v1/foley/paper_shuffle.ogg"></audio>
+    <audio id="sfx-draw" src="https://actions.google.com/sounds/v1/foley/fast_plastic_flick.ogg"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
